@@ -4,6 +4,7 @@ namespace Invi5h\ShopifyHelper\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class MainServiceProvider extends EventServiceProvider
@@ -24,11 +25,11 @@ class MainServiceProvider extends EventServiceProvider
         $this->mergeConfigFrom(dirname(dirname(__DIR__)).'/config/shopifyhelper.php', 'shopifyhelper');
 
         config([
-                'services.shopify' => array_merge_recursive([
+                'services.shopify' => [
                         'client_id' => config('shopifyhelper.client_id'),
                         'client_secret' => config('shopifyhelper.client_secret'),
-                        'redirect' => route('shopify.login.callback')
-                ], config('services.shopify', []))
+                        'redirect' => Str::finish(Str::start(config('shopifyhelper.prefix'), '/'), '/').'callback' // routes haven't been loaded yet, so can't find by name
+                ]
         ]);
 
         parent::register();
