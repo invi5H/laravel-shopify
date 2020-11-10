@@ -3,7 +3,9 @@
     "description": "Helps make shopify apps using laravel.",
     "require": {
         "php": "^7.4|^8.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "laravel/socialite": "^5.1",
+        "socialiteproviders/shopify": "^4.0"
     },
     "require-dev": {
         "orchestra/canvas": "^6.1",
