@@ -1,0 +1,27 @@
+preset: package
+
+namespace: Invi5h\ShopifyHelper
+user-auth-provider: App\User
+
+paths:
+  src: src
+  resource: resources
+
+factory:
+  path: database/factories
+
+migration:
+  path: database/migrations
+  prefix: ''
+
+console:
+  namespace: Invi5h\ShopifyHelper\Console
+
+model:
+  namespace: Invi5h\ShopifyHelper\Models
+
+provider:
+  namespace: Invi5h\ShopifyHelper\Providers
+
+testing:
+  namespace: Invi5h\ShopifyHelper\Tests

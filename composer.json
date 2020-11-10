@@ -1,0 +1,43 @@
+{
+    "name": "invi5h/shopify-helper",
+    "description": "Helps make shopify apps using laravel.",
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "orchestra/canvas": "^6.1",
+        "orchestra/testbench": "^6.4",
+        "phpunit/phpunit": "^9.4"
+    },
+    "authors": [
+        {
+            "name": "Mridul Aggarwal",
+            "email": "mridul_aggarwal@yahoo.co.in"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Invi5h\\ShopifyHelper\\": "src"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Invi5h\\ShopifyHelper\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test-coverage": "vendor/bin/phpunit --coverage-html=phpunit-report",
+        "test": "vendor/bin/phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Invi5h\\ShopifyHelper\\Providers\\MainServiceProvider"
+            ]
+        }
+    }
+}
