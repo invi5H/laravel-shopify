@@ -45,7 +45,7 @@ class MainServiceProvider extends EventServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                     __DIR__.'/../../config/shopifyhelper.php' => config_path('shopifyhelper.php'),
-            ], 'config');
+            ], 'shopifyhelper-config');
         }
 
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
