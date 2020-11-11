@@ -53,7 +53,7 @@ class Store extends Model
      */
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    public function getScopeAttribute(string $scope) : ?Collection
+    public function getScopeAttribute(string $scope = null) : ?Collection
     {
         if ($scope) {
             return collect(array_map('trim', explode(',', $scope)));
@@ -62,7 +62,7 @@ class Store extends Model
         }
     }
 
-    public function getTargetScopeAttribute(string $scope) : ?Collection
+    public function getTargetScopeAttribute(string $scope = null) : ?Collection
     {
         return $this->getScopeAttribute($scope);
     }
