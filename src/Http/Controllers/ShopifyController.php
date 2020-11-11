@@ -39,12 +39,12 @@ class ShopifyController extends Controller
             }
 
             // this is an existing store
-            $target_scopes = $store->target_scope ? collect(array_map('trim', explode(',', $store->target_scope))) : $this->defaultAppScopes();
+            $target_scopes = $store->target_scope ?: $this->defaultAppScopes();
 
             if ($this->verifyShopifyHmac($request->getQueryString()) && $request->input('shop')) {
                 // the request is coming from shopify, so verify if we have all the required permissions
 
-                if ($target_scopes->diff(array_map('trim', explode(',', $store->scope)))->isEmpty()) {
+                if ($target_scopes->diff($store->scope)->isEmpty()) {
                     $this->resetStoreInSession($store);
                     return redirect()->route(config('shopifyhelper.redirect'));
                 }
