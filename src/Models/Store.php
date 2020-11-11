@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Invi5h\ShopifyHelper\Support\Facade\Graphql;
+use Invi5h\ShopifyHelper\Support\Facade\Rest;
+use Invi5h\ShopifyHelper\Support\Graphql\PendingRequest as GraphqlPendingRequest;
+use Invi5h\ShopifyHelper\Support\Rest\PendingRequest as RestPendingRequest;
 
 /**
  * @property int id
@@ -61,5 +65,37 @@ class Store extends Model
     public function getTargetScopeAttribute(string $scope) : ?Collection
     {
         return $this->getScopeAttribute($scope);
+    }
+
+    /**
+     * create a shopify rest api client
+     *
+     * @return RestPendingRequest
+     */
+    public function createRestClient()
+    {
+        return Rest::baseUrl($this->getBaseUrl())->withHeaders([
+                'X-Shopify-Access-Token' => $this->shopify_token
+        ]);
+    }
+
+    /**
+     * create a shopify graphql api client
+     *
+     * @return GraphqlPendingRequest
+     */
+    public function createGraphqlClient()
+    {
+        return Graphql::withoutRedirecting()->baseUrl($this->getBaseUrl().'/graphql.json')->withHeaders([
+                'X-Shopify-Access-Token' => $this->shopify_token
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getBaseUrl() : string
+    {
+        return 'https://'.$this->domain.'/admin/api/'.config('shopifyhelper.version');
     }
 }
