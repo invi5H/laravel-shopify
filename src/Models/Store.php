@@ -47,6 +47,13 @@ class Store extends Model
     use HasFactory;
 
     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = ['shopify_token'];
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var string[]|bool
