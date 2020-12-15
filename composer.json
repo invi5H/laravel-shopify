@@ -1,6 +1,7 @@
 {
     "name": "invi5h/shopify-helper",
     "description": "Helps make shopify apps using laravel.",
+    "version": "0.0.1",
     "require": {
         "php": "^7.4|^8.0",
         "ext-json": "*",
