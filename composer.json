@@ -1,0 +1,59 @@
+{
+    "name": "invi5h/laravel-shopify",
+    "description": "A Laravel package for helping in Shopify App development",
+    "version": "0.0.1",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mridul Aggarwal",
+            "email": "mridul_aggarwal@yahoo.co.in"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Invi5h\\LaravelShopify\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Invi5h\\LaravelShopify\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.21",
+        "vimeo/psalm": "^4.22",
+        "squizlabs/php_codesniffer": "^3.6",
+        "friendsofphp/php-cs-fixer": "^3.6",
+        "laravel/framework": "^9.3"
+    },
+    "support": {
+        "issues": "https://github.com/invi5H/laravel-shopify/issues",
+        "forum": "https://github.com/invi5H/laravel-shopify/discussions",
+        "source": "https://github.com/invi5H/laravel-shopify"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "analyze": "./vendor/bin/psalm",
+        "check": "php-cs-fixer fix --diff --dry-run",
+        "sniff": "./vendor/bin/phpcs",
+        "fix": [
+            "php-cs-fixer fix",
+            "./vendor/bin/phpcbf"
+        ],
+        "test": "./vendor/bin/pest",
+        "coverage-report": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage-html='tests-coverage'"
+    }
+}
