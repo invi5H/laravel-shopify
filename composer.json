@@ -45,6 +45,13 @@
             "pestphp/pest-plugin": true
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Invi5h\\LaravelShopify\\ServiceProvider"
+            ]
+        }
+    },
     "scripts": {
         "analyze": "./vendor/bin/psalm",
         "check": "php-cs-fixer fix --diff --dry-run",

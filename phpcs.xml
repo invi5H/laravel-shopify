@@ -18,19 +18,42 @@
 
 	<rule ref="Generic">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
+		<exclude name="Generic.Classes.OpeningBraceSameLine.BraceOnNewLine" />
 		<exclude name="Generic.Files.EndFileNoNewline.Found" />
+		<exclude name="Generic.Files.LowercasedFilename.NotFound" />
+		<exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine" />
 		<exclude name="Generic.PHP.ClosingPHPTag.NotFound" />
 		<exclude name="Generic.PHP.RequireStrictTypes.MissingDeclaration" />
+		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" />
 	</rule>
-	<rule ref="MySource" />
+	<rule ref="MySource">
+		<exclude name="MySource.Channels.IncludeSystem.NotIncludedExtends" />
+	</rule>
 	<rule ref="PEAR">
+		<exclude name="PEAR.Commenting.ClassComment.Missing" />
 		<exclude name="PEAR.Commenting.FileComment.Missing" />
 	</rule>
 	<rule ref="PSR1" />
 	<rule ref="PSR2" />
-	<rule ref="PSR12" />
+	<rule ref="PSR12">
+		<exclude name="PSR12.Operators.OperatorSpacing" />
+	</rule>
 	<rule ref="Squiz">
+		<exclude name="Squiz.Commenting.ClassComment.Missing" />
+		<exclude name="Squiz.Commenting.ClosingDeclarationComment.Missing" />
 		<exclude name="Squiz.Commenting.FileComment.Missing" />
+		<exclude name="Squiz.Commenting.InlineComment.Empty" />
+		<exclude name="Squiz.Files.FileExtension.ClassFound" />
+		<exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue" />
+		<exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose" />
+		<exclude name="Squiz.WhiteSpace.FunctionSpacing" />
 	</rule>
 	<rule ref="Zend" />
+
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="120" />
+			<property name="absoluteLineLimit" value="150" />
+		</properties>
+	</rule>
 </ruleset>
