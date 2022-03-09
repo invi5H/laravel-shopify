@@ -26,9 +26,10 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                            __DIR__.'/../config/laravelshopify.php' => config_path('laravelshopify.php'),
-                    ], 'laravelshopify');
+            $paths = [
+                    __DIR__.'/../config/laravelshopify.php' => config_path('laravelshopify.php'),
+            ];
+            $this->publishes($paths, 'laravelshopify');
         }
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');

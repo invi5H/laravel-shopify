@@ -18,6 +18,7 @@
 
 	<rule ref="Generic">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
+		<exclude name="Generic.Arrays.ArrayIndent.KeyIncorrect" />
 		<exclude name="Generic.Classes.OpeningBraceSameLine.BraceOnNewLine" />
 		<exclude name="Generic.Files.EndFileNoNewline.Found" />
 		<exclude name="Generic.Files.LowercasedFilename.NotFound" />
