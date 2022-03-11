@@ -27,4 +27,5 @@ return $config->setRules([
         'array_indentation' => false,
         'native_function_invocation' => false,
         'phpdoc_align' => false,
+        'function_declaration' => false,
 ])->setRiskyAllowed(true)->setFinder($finder);

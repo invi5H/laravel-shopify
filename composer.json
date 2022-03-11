@@ -56,7 +56,7 @@
     },
     "scripts": {
         "analyze": "./vendor/bin/psalm",
-        "check": "./vendor/bin/php-cs-fixer fix --diff --dry-run",
+        "check": "./vendor/bin/php-cs-fixer fix --diff --dry-run -vvv",
         "sniff": "./vendor/bin/phpcs",
         "fix": [
             "./vendor/bin/psalter --issues=all",
