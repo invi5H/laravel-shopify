@@ -18,4 +18,13 @@ return $config->setRules([
         '@PSR12:risky' => true,
         '@PhpCsFixer' => true,
         '@PhpCsFixer:risky' => true,
-])->setFinder($finder);
+        'declare_strict_types' => false,
+        'class_definition' => false,
+        'braces' => false,
+        'return_type_declaration' => [
+                'space_before' => 'one',
+        ],
+        'array_indentation' => false,
+        'native_function_invocation' => false,
+        'phpdoc_align' => false,
+])->setRiskyAllowed(true)->setFinder($finder);

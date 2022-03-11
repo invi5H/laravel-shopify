@@ -8,10 +8,8 @@ class ServiceProvider extends LaravelServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register() : void
     {
         parent::register();
 
@@ -20,10 +18,8 @@ class ServiceProvider extends LaravelServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot() : void
     {
         if ($this->app->runningInConsole()) {
             $paths = [

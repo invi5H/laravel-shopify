@@ -12,7 +12,9 @@
     ],
     "autoload": {
         "psr-4": {
-            "Invi5h\\LaravelShopify\\": "src/"
+            "Invi5h\\LaravelShopify\\": "src/",
+            "Invi5h\\LaravelShopify\\Database\\Factories\\": "database/factories/",
+            "Invi5h\\LaravelShopify\\Database\\Seeders\\": "database/seeders/"
         },
         "files": [
             "src/functions.php"
@@ -54,10 +56,11 @@
     },
     "scripts": {
         "analyze": "./vendor/bin/psalm",
-        "check": "php-cs-fixer fix --diff --dry-run",
+        "check": "./vendor/bin/php-cs-fixer fix --diff --dry-run",
         "sniff": "./vendor/bin/phpcs",
         "fix": [
-            "php-cs-fixer fix",
+            "./vendor/bin/psalter --issues=all",
+            "./vendor/bin/php-cs-fixer fix",
             "./vendor/bin/phpcbf"
         ],
         "test": "./vendor/bin/pest",

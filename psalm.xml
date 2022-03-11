@@ -1,10 +1,31 @@
 <?xml version="1.0"?>
 <psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" errorLevel="1" xmlns="https://getpsalm.org/schema/config" xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd">
-    <projectFiles>
-        <directory name="src" />
-        <directory name="config" />
-        <directory name="routes" />
-        <directory name="database" />
-        <directory name="tests" />
-    </projectFiles>
+	<projectFiles>
+		<directory name="src" />
+		<directory name="config" />
+		<directory name="routes" />
+		<directory name="database" />
+		<directory name="tests" />
+		<ignoreFiles>
+			<directory name="vendor" />
+		</ignoreFiles>
+	</projectFiles>
+	<issueHandlers>
+		<InternalMethod errorLevel="suppress" />
+		<MixedInferredReturnType errorLevel="suppress" />
+		<MixedMethodCall errorLevel="suppress" />
+		<PossiblyInvalidMethodCall errorLevel="suppress" />
+		<PossiblyNullReference errorLevel="suppress" />
+		<PossiblyUndefinedMethod errorLevel="suppress" />
+		<InvalidScope>
+			<errorLevel type="suppress">
+				<directory name="tests" />
+			</errorLevel>
+		</InvalidScope>
+		<MissingClosureReturnType>
+			<errorLevel type="suppress">
+				<file name="tests/Pest.php" />
+			</errorLevel>
+		</MissingClosureReturnType>
+	</issueHandlers>
 </psalm>
