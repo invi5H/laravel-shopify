@@ -2,7 +2,10 @@
 
 namespace Invi5h\LaravelShopify;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\Shopify\ShopifyExtendSocialite;
 
 class ServiceProvider extends LaravelServiceProvider
 {
@@ -30,5 +33,7 @@ class ServiceProvider extends LaravelServiceProvider
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../routes/laravelshopify.php');
+
+        Event::listen(SocialiteWasCalled::class, ShopifyExtendSocialite::class);
     }
 }

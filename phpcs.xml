@@ -20,25 +20,31 @@
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
 		<exclude name="Generic.Arrays.ArrayIndent.KeyIncorrect" />
 		<exclude name="Generic.Commenting.ClassComment.*" />
-		<exclude name="Generic.Commenting.DocComment.MissingShort" />
-		<exclude name="Generic.Commenting.DocComment.TagValueIndent" />
+		<exclude name="Generic.Commenting.DocComment" />
+		<exclude name="Generic.Commenting.Todo.TaskFound" />
+		<exclude name="Generic.ControlStructures.DisallowYodaConditions" />
 		<exclude name="Generic.Classes.OpeningBraceSameLine.BraceOnNewLine" />
+		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSame" />
+		<exclude name="Generic.Formatting.NoSpaceAfterCast.SpaceFound" />
+		<exclude name="Generic.Formatting.SpaceAfterNot.Incorrect" />
+		<exclude name="Generic.Formatting.SpaceBeforeCast.NoSpace" />
 		<exclude name="Generic.Files.EndFileNoNewline.Found" />
 		<exclude name="Generic.Files.LowercasedFilename.NotFound" />
 		<exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine" />
 		<exclude name="Generic.PHP.ClosingPHPTag.NotFound" />
 		<exclude name="Generic.PHP.RequireStrictTypes.MissingDeclaration" />
+		<exclude name="Generic.PHP.UpperCaseConstant.Found" />
 		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" />
 	</rule>
 	<rule ref="MySource">
 		<exclude name="MySource.Channels.IncludeSystem" />
-		<exclude name="MySource.Commenting.FunctionComment.MissingReturn" />
+		<exclude name="MySource.Commenting.FunctionComment" />
 		<exclude name="MySource.PHP.ReturnFunctionValue.NotAssigned" />
 	</rule>
 	<rule ref="PEAR">
 		<exclude name="PEAR.Commenting.ClassComment" />
 		<exclude name="PEAR.Commenting.FileComment.Missing" />
-		<exclude name="PEAR.Commenting.FunctionComment.MissingReturn" />
+		<exclude name="PEAR.Commenting.FunctionComment" />
 		<exclude name="PEAR.Functions.FunctionCallSignature" />
 	</rule>
 	<rule ref="PSR1" />
@@ -48,14 +54,21 @@
 		<exclude name="PSR12.Operators.OperatorSpacing" />
 	</rule>
 	<rule ref="Squiz">
+		<exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned" />
+		<exclude name="Squiz.Commenting.BlockComment" />
 		<exclude name="Squiz.Commenting.ClassComment" />
 		<exclude name="Squiz.Commenting.ClosingDeclarationComment.Missing" />
 		<exclude name="Squiz.Commenting.FileComment.Missing" />
-		<exclude name="Squiz.Commenting.FunctionComment.MissingReturn" />
-		<exclude name="Squiz.Commenting.InlineComment.Empty" />
+		<exclude name="Squiz.Commenting.FunctionComment" />
+		<exclude name="Squiz.Commenting.InlineComment" />
+		<exclude name="Squiz.Commenting.LongConditionClosingComment.Missing" />
 		<exclude name="Squiz.Commenting.VariableComment.TagNotAllowed" />
+		<exclude name="Squiz.ControlStructures.ElseIfDeclaration.NotAllowed" />
 		<exclude name="Squiz.Files.FileExtension.ClassFound" />
-		<exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue" />
+		<exclude name="Squiz.Operators.ComparisonOperatorUsage" />
+		<exclude name="Squiz.PHP.DisallowBooleanStatement.Found" />
+		<exclude name="Squiz.PHP.DisallowInlineIf.Found" />
+		<exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar" />
 		<exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose" />
 		<exclude name="Squiz.WhiteSpace.FunctionSpacing" />
 		<exclude name="Squiz.WhiteSpace.MemberVarSpacing.FirstIncorrect" />

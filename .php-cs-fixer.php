@@ -28,4 +28,10 @@ return $config->setRules([
         'native_function_invocation' => false,
         'phpdoc_align' => false,
         'function_declaration' => false,
+        'single_line_comment_style' => [
+                'comment_types' => ['hash'],
+        ],
+        'phpdoc_to_comment' => [
+                'ignored_tags' => ['var'],
+        ],
 ])->setRiskyAllowed(true)->setFinder($finder);

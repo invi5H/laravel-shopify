@@ -12,14 +12,22 @@
 	</projectFiles>
 	<issueHandlers>
 		<InternalMethod errorLevel="suppress" />
+		<LessSpecificReturnStatement errorLevel="suppress" />
+		<MixedArgument errorLevel="suppress" />
+		<MixedArgumentTypeCoercion errorLevel="suppress" />
 		<MixedInferredReturnType errorLevel="suppress" />
 		<MixedMethodCall errorLevel="suppress" />
+		<MixedReturnStatement errorLevel="suppress" />
+		<MixedOperand errorLevel="suppress" />
+		<MoreSpecificReturnType errorLevel="suppress" />
+		<PossiblyInvalidCast errorLevel="suppress" />
 		<PossiblyInvalidMethodCall errorLevel="suppress" />
 		<PossiblyNullReference errorLevel="suppress" />
 		<PossiblyUndefinedMethod errorLevel="suppress" />
 		<InvalidScope>
 			<errorLevel type="suppress">
 				<directory name="tests" />
+				<file name="src/functions.php" />
 			</errorLevel>
 		</InvalidScope>
 		<MissingClosureReturnType>

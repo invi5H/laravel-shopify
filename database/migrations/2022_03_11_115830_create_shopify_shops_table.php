@@ -11,7 +11,16 @@ return new class () extends Migration {
     public function up() : void
     {
         Schema::create('shopify_shops', function (Blueprint $table) : void {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary();
+            $table->string('url')->unique();
+            $table->string('access_token')->nullable();
+            $table->string('status')->default('active');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('domain')->nullable();
+            $table->boolean('dev')->default(false);
+            $table->boolean('plus')->default(false);
+            $table->json('scope')->nullable();
             $table->timestamps();
         });
     }

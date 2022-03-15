@@ -28,7 +28,9 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "laravel/socialite": "^5.5",
+        "socialiteproviders/shopify": "^4.1"
     },
     "require-dev": {
         "pestphp/pest": "^1.21",
