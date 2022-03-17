@@ -1,0 +1,13 @@
+#! /bin/bash
+
+DIR=$(cd "$(dirname $(dirname "${BASH_SOURCE[0]}"))" &> /dev/null && pwd)
+echo $DIR;
+
+rm -rf $DIR/temp/laravel
+composer create-project --no-plugins laravel/laravel $DIR/temp/laravel
+cd $DIR/temp/laravel
+composer require --dev barryvdh/laravel-ide-helper
+php artisan ide-helper:generate
+cd -
+cp $DIR/temp/laravel/_ide_helper.php $DIR/_ide_helper.php
+rm -rf $DIR/temp/laravel
