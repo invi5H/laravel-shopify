@@ -2,13 +2,32 @@
 
 namespace Invi5h\LaravelShopify\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Invi5h\LaravelShopify\Database\Factories\ShopifyShopFactory;
 
 /**
+ * @property int $id
+ * @property string $url
+ * @property string $access_token
+ * @property string $status
+ * @property string $name
+ * @property string $email
+ * @property string $domain
+ * @property bool $dev
+ * @property bool $plus
+ * @property array $scope
+ * @property null|Carbon $created_at
+ * @property null|Carbon $updated_at
+ * @method static Builder|static newModelQuery()
+ * @method static Builder|static newQuery()
+ * @method static Builder|static query()
+ * @mixin Eloquent
  * @psalm-suppress PropertyNotSetInConstructor
  */
 class ShopifyShop extends Model

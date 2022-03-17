@@ -12,6 +12,7 @@
 	</projectFiles>
 	<issueHandlers>
 		<InternalMethod errorLevel="suppress" />
+		<ImplementedReturnTypeMismatch errorLevel="suppress" />
 		<LessSpecificReturnStatement errorLevel="suppress" />
 		<MixedArgument errorLevel="suppress" />
 		<MixedArgumentTypeCoercion errorLevel="suppress" />
@@ -24,6 +25,7 @@
 		<PossiblyInvalidMethodCall errorLevel="suppress" />
 		<PossiblyNullReference errorLevel="suppress" />
 		<PossiblyUndefinedMethod errorLevel="suppress" />
+		<UndefinedDocblockClass errorLevel="suppress" />
 		<InvalidScope>
 			<errorLevel type="suppress">
 				<directory name="tests" />
