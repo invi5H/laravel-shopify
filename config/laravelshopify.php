@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 use Invi5h\LaravelShopify\Models\AppType;
-use Invi5h\LaravelShopify\Models\BillingType;
+use Invi5h\LaravelShopify\Models\Billing\BillingType;
 use Invi5h\LaravelShopify\Models\ShopifyShop;
 
 return [

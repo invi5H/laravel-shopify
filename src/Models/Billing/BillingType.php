@@ -1,6 +1,6 @@
 <?php
 
-namespace Invi5h\LaravelShopify\Models;
+namespace Invi5h\LaravelShopify\Models\Billing;
 
 // phpcs:disable
 enum BillingType
