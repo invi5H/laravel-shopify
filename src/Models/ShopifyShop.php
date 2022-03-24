@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Invi5h\LaravelShopify\Contracts\ShopModelInterface;
 use Invi5h\LaravelShopify\Database\Factories\ShopifyShopFactory;
 
 /**
@@ -30,7 +31,7 @@ use Invi5h\LaravelShopify\Database\Factories\ShopifyShopFactory;
  * @mixin Eloquent
  * @psalm-suppress PropertyNotSetInConstructor
  */
-class ShopifyShop extends Model
+class ShopifyShop extends Model implements ShopModelInterface
 {
     use HasFactory;
 
@@ -75,7 +76,7 @@ class ShopifyShop extends Model
         return true;
     }
 
-    public function createNewRecurringContract(array $params)
+    public function createBillingContract() : ?array
     {
         // @todo implement
         return null;
@@ -100,7 +101,7 @@ class ShopifyShop extends Model
      */
     public static function defaultScopes() : Collection
     {
-        return collect((array) config('laravelshopify.scopes'))->trim();
+        return collect((array) config('laravelshopify.default_scopes'))->trim();
     }
 
     public static function for(string $url, string $suffix = '.myshopify.com') : ?static

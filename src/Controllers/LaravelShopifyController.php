@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Invi5h\LaravelShopify\Contracts\ShopModelInterface;
 use Invi5h\LaravelShopify\Models\ShopifyShop;
 use Laravel\Socialite\Facades\Socialite;
 use SocialiteProviders\Shopify\Provider;
@@ -20,6 +21,13 @@ class LaravelShopifyController extends Controller
     use AuthorizesRequests;
     use DispatchesJobs;
     use ValidatesRequests;
+
+    private string $shopModel;
+
+    public function __construct()
+    {
+        $this->shopModel = (config('laravelshopify.shop_model') ?? ShopifyShop::class);
+    }
 
     /**
      * Homepage to the app.
@@ -31,18 +39,20 @@ class LaravelShopifyController extends Controller
         $shop = (string) $request->input('shop');
         if ($shop) {
             Log::debug('App Launch for Shop- '.$shop);
-            $shopObject = ShopifyShop::for($shop);
+
+            /** @var ?ShopModelInterface $shopObject */
+            $shopObject = $this->shopModel::for($shop);
 
             if (null === $shopObject) {
                 Log::debug('New Shop Install- '.$shop);
 
-                return $this->getOauthResponse($this->defaultScopes());
+                return $this->getOauthResponse($this->shopModel::defaultScopes());
             }
 
             if (!$shopObject->isAccessTokenValid()) {
                 Log::debug('Invalid Access Token detected- '.$shop);
 
-                return $this->getOauthResponse($this->defaultScopes());
+                return $this->getOauthResponse($this->shopModel::defaultScopes());
             }
 
             if ($shopObject->needsReauth()) {
@@ -54,7 +64,7 @@ class LaravelShopifyController extends Controller
             if ($shopObject->needsBilling()) {
                 Log::debug('Making billing contract- '.$shop);
 
-                $this->createBillingContract($shopObject);
+                $shopObject->createBillingContract();
             }
 
             if ($shopObject->hasPendingBillingContract()) {
@@ -98,14 +108,14 @@ class LaravelShopifyController extends Controller
                     'plan' => $user['plan_name'],
             ];
 
-            /** @var ShopifyShop $shopObject */
-            $shopObject = ShopifyShop::updateOrCreate(['url' => $shop], $data);
+            /** @var ShopModelInterface $shopObject */
+            $shopObject = $this->shopModel::updateOrCreate(['url' => $shop], $data);
             $shopObject->setup();
 
             if ($shopObject->needsBilling()) {
                 Log::debug('Making billing contract- '.$shop);
 
-                $this->createBillingContract($shopObject);
+                $shopObject->createBillingContract();
             }
 
             if ($shopObject->hasPendingBillingContract()) {
@@ -120,19 +130,11 @@ class LaravelShopifyController extends Controller
         return redirect()->route('laravelshopify.home', ['shop' => $shop]);
     }
 
-    protected function billingPageRedirectResponse(ShopifyShop $shop) : Response
+    protected function billingPageRedirectResponse(ShopModelInterface $shop) : Response
     {
         $url = $shop->getbillingPageRedirectUrl();
 
         return response()->setContent("<script>window.top.location.href='{$url}'</script>");
-    }
-
-    /**
-     * @psalm-return Collection<int, string>
-     */
-    protected function defaultScopes() : Collection
-    {
-        return ShopifyShop::defaultScopes();
     }
 
     /**
@@ -144,7 +146,7 @@ class LaravelShopifyController extends Controller
         if ($queryString) {
             preg_match('/hmac\=([^\&]+)\&/', $queryString, $matches);
             $query = str_replace($matches[0], '', $queryString);
-            $signature = hash_hmac('sha256', $query, (string) config('laravelshopify.client_secret'));
+            $signature = hash_hmac('sha256', $query, (string) config('laravelshopify.api_secret'));
 
             return $signature === $matches[1];
         }
@@ -182,30 +184,14 @@ class LaravelShopifyController extends Controller
 
     protected function renderAccessDeniedView() : never
     {
-        abort(Response::HTTP_BAD_REQUEST, 'Access Denied. Please go to shopify and open this app there.');
+        abort(Response::HTTP_BAD_REQUEST, 'Invalid Request');
     }
 
-    protected function createBillingContract(ShopifyShop $shopObject) : ?array
+    /**
+     * @psalm-suppress NoInterfaceProperties
+     */
+    protected function getAppUrl(ShopModelInterface $shopObject) : string
     {
-        $url = $this->getAppUrl($shopObject);
-
-        // phpcs:disable
-        $params = [
-                'name' => config('laravelshopify.app_name'),
-                'price' => config('laravelshopify.app_recurring_price'),
-                'capped_amount' => config('laravelshopify.app_recurring_cap'),
-                'terms' => config('laravelshopify.app_recurring_terms'),
-                'return_url' => $url,
-                'trial_days' => config('laravelshopify.app_trial_days'),
-                'test' => $shopObject->isDevShop() || config('laravelshopify.test_mode'),
-        ];
-        // phpcs:enable
-
-        return $shopObject->createNewRecurringContract($params);
-    }
-
-    protected function getAppUrl(ShopifyShop $shopObject) : string
-    {
-        return 'https://'.$shopObject->url.'/admin/apps/'.config('laravelshopify.app_name');
+        return 'https://'.$shopObject->url.'/admin/apps/'.config('laravelshopify.url');
     }
 }

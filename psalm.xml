@@ -13,7 +13,9 @@
 	<issueHandlers>
 		<InternalMethod errorLevel="suppress" />
 		<ImplementedReturnTypeMismatch errorLevel="suppress" />
+		<InvalidStringClass errorLevel="suppress" />
 		<LessSpecificReturnStatement errorLevel="suppress" />
+		<MixedAssignment errorLevel="suppress" />
 		<MixedArgument errorLevel="suppress" />
 		<MixedArgumentTypeCoercion errorLevel="suppress" />
 		<MixedInferredReturnType errorLevel="suppress" />

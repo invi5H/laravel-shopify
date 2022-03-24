@@ -46,6 +46,7 @@
 		<exclude name="PEAR.Commenting.FileComment.Missing" />
 		<exclude name="PEAR.Commenting.FunctionComment" />
 		<exclude name="PEAR.Functions.FunctionCallSignature" />
+		<exclude name="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore" />
 	</rule>
 	<rule ref="PSR1" />
 	<rule ref="PSR2" />
@@ -62,6 +63,7 @@
 		<exclude name="Squiz.Commenting.FunctionComment" />
 		<exclude name="Squiz.Commenting.InlineComment" />
 		<exclude name="Squiz.Commenting.LongConditionClosingComment.Missing" />
+		<exclude name="Squiz.Commenting.VariableComment.Missing" />
 		<exclude name="Squiz.Commenting.VariableComment.TagNotAllowed" />
 		<exclude name="Squiz.ControlStructures.ElseIfDeclaration.NotAllowed" />
 		<exclude name="Squiz.Files.FileExtension.ClassFound" />
