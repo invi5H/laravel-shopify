@@ -20,7 +20,7 @@ return new class () extends Migration {
             $table->string('domain')->nullable();
             $table->boolean('dev')->default(false);
             $table->boolean('plus')->default(false);
-            $table->json('scope')->nullable();
+            $table->string('scope')->nullable();
             $table->timestamps();
         });
     }

@@ -35,6 +35,29 @@ class ShopifyShop extends Model implements ShopModelInterface
 {
     use HasFactory;
 
+    public $incrementing = false;
+
+    public $timestamps = false;
+
+    protected $fillable = [
+            'id',
+            'url',
+            'access_token',
+            'name',
+            'email',
+            'domain',
+            'scope',
+            'plan',
+            self::CREATED_AT,
+            self::UPDATED_AT,
+    ];
+
+    protected $casts = [
+            'dev' => 'bool',
+            'plus' => 'bool',
+            'scope' => 'array',
+    ];
+
     public function setup() : void
     {
         // @todo implement

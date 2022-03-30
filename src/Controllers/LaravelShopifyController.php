@@ -9,8 +9,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Invi5h\LaravelShopify\Contracts\ShopModelInterface;
 use Invi5h\LaravelShopify\Models\ShopifyShop;
 use Laravel\Socialite\Facades\Socialite;
@@ -95,7 +97,7 @@ class LaravelShopifyController extends Controller
         $shop = (string) $request->input('shop');
         if ($shop && $this->verifyShopifyHmac($request->getQueryString())) {
             Log::debug('Shopify callback for Shop- '.$shop);
-            $user = $this->getOauthDriver()->stateless()->user();
+            $user = $this->getOauthDriver()->user();
 
             $data = [
                     'id' => $user->id,
@@ -105,7 +107,10 @@ class LaravelShopifyController extends Controller
                     'email' => $user->email,
                     'domain' => $user['domain'],
                     'scope' => $user->accessTokenResponseBody['scope'],
-                    'plan' => $user['plan_name'],
+                    'dev' => Str::contains($user['plan_name'], 'dev'),
+                    'plus' => Str::contains($user['plan_name'], 'plus'),
+                    'created_at' => Carbon::parse($user['created_at']),
+                    'updated_at' => Carbon::parse($user['updated_at']),
             ];
 
             /** @var ShopModelInterface $shopObject */
@@ -156,7 +161,7 @@ class LaravelShopifyController extends Controller
 
     protected function getOauthDriver() : Provider
     {
-        return Socialite::driver('shopify');
+        return Socialite::driver('shopify')->stateless();
     }
 
     /**

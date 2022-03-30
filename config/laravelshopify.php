@@ -11,10 +11,15 @@ return [
 
     // the app details
     'type' => AppType::PUBLIC,
+
     'name' => env('APP_NAME', 'App'),
     'url' => env('APP_URL', Str::slug(env('APP_NAME', 'App'))),
+
+    // fixed subdomain is for custom apps
+    'subdomain' => env('APP_SUBDOMAIN', ''),
     'api_key' => env('API_KEY', ''),
     'api_secret' => env('API_SECRET', ''),
+
     // dev stores are always in test mode
     'test_mode' => (bool) env('TEST_MODE', false),
     'default_scopes' => env('APP_SCOPE') ? array_filter(array_map('trim', explode(',', env('APP_SCOPE')))) : ['read_customers'],

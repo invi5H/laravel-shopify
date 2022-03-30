@@ -5,6 +5,8 @@ namespace Invi5h\LaravelShopify;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Invi5h\LaravelShopify\Support\Socialite\ConfigRetriever;
+use SocialiteProviders\Manager\Contracts\Helpers\ConfigRetrieverInterface;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 use SocialiteProviders\Shopify\ShopifyExtendSocialite;
 
@@ -18,6 +20,8 @@ class ServiceProvider extends LaravelServiceProvider
         parent::register();
 
         $this->mergeConfigFrom(dirname(__DIR__).'/config/laravelshopify.php', 'laravelshopify');
+
+        $this->app->singleton(ConfigRetrieverInterface::class, fn() => new ConfigRetriever());
     }
 
     /**
