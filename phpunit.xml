@@ -8,6 +8,8 @@
 	<coverage processUncoveredFiles="true">
 		<include>
 			<directory suffix=".php">./src</directory>
+			<directory suffix=".php">./config</directory>
+			<directory suffix=".php">./database</directory>
 		</include>
 	</coverage>
 	<php>
