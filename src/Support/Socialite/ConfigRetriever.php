@@ -19,8 +19,6 @@ class ConfigRetriever extends BaseConfigRetriever
             return $this->servicesArray;
         }
 
-        // @codeCoverageIgnoreStart
         return parent::getConfigFromServicesArray($providerName);
-        // @codeCoverageIgnoreEnd
     }
 }
