@@ -17,9 +17,15 @@ it('is valid eloquent model', function () : void {
 it('is valid app type', function () : void {
     $type = config('laravelshopify.type');
     expect($type)->toBeInstanceOf(AppType::class);
+    expect($type->isPublic())->toBeTrue();
+    expect($type->isCustom())->toBeFalse();
 });
 
 it('is valid billing type', function () : void {
     $type = config('laravelshopify.billing_type');
     expect($type)->toBeInstanceOf(BillingType::class);
+    expect($type->isOnetime())->toBeTrue();
+    expect($type->isRecurring())->toBeFalse();
+    expect($type->enabled())->toBeTrue();
+    expect($type->disabled())->toBeFalse();
 });
