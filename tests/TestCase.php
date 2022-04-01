@@ -4,6 +4,8 @@ namespace Invi5h\LaravelShopify\Tests;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Invi5h\LaravelShopify\ServiceProvider;
+use Laravel\Socialite\SocialiteServiceProvider;
+use SocialiteProviders\Manager\ServiceProvider as SocialiteShopifyServiceProvider;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
@@ -16,6 +18,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
+                SocialiteServiceProvider::class,
+                SocialiteShopifyServiceProvider::class,
                 ServiceProvider::class,
         ];
     }

@@ -162,7 +162,7 @@ class LaravelShopifyController extends Controller
     /**
      * @psalm-suppress UndefinedInterfaceMethod
      */
-    protected function getOauthDriver() : Provider
+    public function getOauthDriver() : Provider
     {
         return Socialite::driver('shopify')->stateless();
     }
