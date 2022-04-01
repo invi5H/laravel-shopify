@@ -3,10 +3,10 @@
 namespace Invi5h\LaravelShopify\Models;
 
 // phpcs:disable
-enum AppType
+enum AppType: string
 {
-    case PUBLIC;
-    case CUSTOM;
+    case PUBLIC = 'public';
+    case CUSTOM = 'custom';
 
     public function isPublic() : bool
     {

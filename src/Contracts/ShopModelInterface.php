@@ -6,14 +6,14 @@ use Illuminate\Support\Collection;
 
 interface ShopModelInterface
 {
+    public function setup() : void;
+
     /**
      * @return Collection<int, string>
      */
     public static function defaultScopes() : Collection;
 
     public static function for(string $url, string $suffix = '.myshopify.com') : ?static;
-
-    public function setup() : void;
 
     public function isAccessTokenValid() : bool;
 

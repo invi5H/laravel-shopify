@@ -36,8 +36,9 @@
         "pestphp/pest": "^1.21",
         "vimeo/psalm": "^4.22",
         "squizlabs/php_codesniffer": "^3.6",
-        "friendsofphp/php-cs-fixer": "^3.6",
-        "laravel/framework": "^9.3"
+        "friendsofphp/php-cs-fixer": "^3.7",
+        "laravel/framework": "^9.6",
+        "orchestra/testbench": "^7.2"
     },
     "support": {
         "issues": "https://github.com/invi5H/laravel-shopify/issues",
@@ -57,6 +58,7 @@
         }
     },
     "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
         "analyze": "./vendor/bin/psalm",
         "check": "./vendor/bin/php-cs-fixer fix --diff --dry-run -vvv",
         "sniff": "./vendor/bin/phpcs",

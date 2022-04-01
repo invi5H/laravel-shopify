@@ -32,6 +32,8 @@ return $config->setRules([
                 'comment_types' => ['hash'],
         ],
         'phpdoc_to_comment' => [
-                'ignored_tags' => ['var'],
+                'ignored_tags' => ['var', 'psalm-suppress'],
         ],
+        'php_unit_test_class_requires_covers' => false,
+        'final_internal_class' => false,
 ])->setRiskyAllowed(true)->setFinder($finder);

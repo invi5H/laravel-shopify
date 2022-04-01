@@ -10,7 +10,7 @@ return [
     'shop_model' => ShopifyShop::class,
 
     // the app details
-    'type' => AppType::PUBLIC,
+    'type' => AppType::tryFrom(env('APP_TYPE', 'public')) ?: AppType::PUBLIC,
 
     'name' => env('APP_NAME', 'App'),
     'url' => env('APP_URL', Str::slug(env('APP_NAME', 'App'))),
@@ -24,7 +24,7 @@ return [
     'test_mode' => (bool) env('TEST_MODE', false),
     'default_scopes' => env('APP_SCOPE') ? array_filter(array_map('trim', explode(',', env('APP_SCOPE')))) : ['read_customers'],
 
-    'billing_type' => BillingType::ONETIME,
+    'billing_type' => BillingType::tryFrom(env('BILLING_TYPE', 'onetime')) ?: BillingType::ONETIME,
     'billing_name' => env('BILLING_NAME', env('APP_NAME', 'App')),
     'billing_amount' => (float) env('BILLING_PRICE', 0),
     'billing_currency' => env('BILLING_CURRENCY', 'USD'),

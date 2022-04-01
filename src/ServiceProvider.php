@@ -68,8 +68,9 @@ class ServiceProvider extends LaravelServiceProvider
         });
         Collection::macro('mapKeys', function (callable $callback) {
             /** @var Collection $this */
-            /* @psalm-suppress InvalidArgument */
-            return $this->keys()->map($callback)->combine($this->values());
+            $keys = $this->keys()->map($callback);
+            /** @psalm-suppress InvalidArgument */
+            return $keys->combine($this->values());
         });
     }
 }

@@ -3,11 +3,11 @@
 namespace Invi5h\LaravelShopify\Models\Billing;
 
 // phpcs:disable
-enum BillingType
+enum BillingType: string
 {
-    case NONE;
-    case ONETIME;
-    case RECURRING;
+    case NONE = 'none';
+    case ONETIME = 'onetime';
+    case RECURRING = 'recurring';
 
     public function enabled() : bool
     {
