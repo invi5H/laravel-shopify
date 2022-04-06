@@ -3,6 +3,7 @@
 namespace Invi5h\LaravelShopify\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use Invi5h\LaravelShopify\Models\ShopifyShop;
 
 /**
@@ -25,6 +26,8 @@ class ShopifyShopFactory extends Factory
      */
     public function definition() : array
     {
-        return [];
+        return [
+                'url' => Str::slug((string) $this->faker->words($this->faker->biasedNumberBetween(1, 3), true)),
+        ];
     }
 }
