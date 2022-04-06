@@ -32,9 +32,11 @@ class LaravelShopifyController extends Controller
     }
 
     /**
-     * Homepage to the app.
+     * Homepage to the shopify app.
      * This will check if the app is installed or not and act accordingly.
-     * It may redirect the user to the actual homepage, or redirect to the shopify oauth flow.
+     * It may redirect the user to the actual homepage for the app, or redirect to the shopify oauth flow.
+     *
+     * @codeCoverageIgnore
      */
     public function home(Request $request) : RedirectResponse|Response
     {
@@ -91,6 +93,8 @@ class LaravelShopifyController extends Controller
 
     /**
      * Callback for the shopify oauth flow.
+     *
+     * @codeCoverageIgnore
      */
     public function callback(Request $request) : RedirectResponse|Response
     {
@@ -135,15 +139,21 @@ class LaravelShopifyController extends Controller
         return redirect()->route('laravelshopify.home', ['shop' => $shop]);
     }
 
+    /**
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress InvalidReturnType
+     */
     protected function billingPageRedirectResponse(ShopModelInterface $shop) : Response
     {
         $url = $shop->getbillingPageRedirectUrl();
 
-        return response()->setContent("<script>window.top.location.href='{$url}'</script>");
+        return response("<script>window.top.location.href='{$url}'</script>");
     }
 
     /**
      * Verifies the Hmac coming from shopify.
+     *
+     * @codeCoverageIgnore
      */
     protected function verifyShopifyHmac(?string $queryString) : bool
     {

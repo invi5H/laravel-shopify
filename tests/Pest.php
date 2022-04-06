@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Invi5h\LaravelShopify\Tests\TestCase;
+use Pest\Expectation;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +29,10 @@ uses(TestCase::class)->in('Unit');
 |
 */
 
-expect()->extend('toBeOne', fn() => $this->toBe(1));
+expect()->extend('toBeOne', fn() : Expectation => $this->toBe(1));
+
+expect()->extend('toBeResponse', fn() : Expectation => $this->toBeInstanceOf(Response::class));
+expect()->extend('toBeRedirect', fn() : Expectation => $this->toBeInstanceOf(RedirectResponse::class));
 
 /*
 |--------------------------------------------------------------------------
