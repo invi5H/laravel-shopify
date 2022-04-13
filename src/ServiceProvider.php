@@ -5,6 +5,14 @@ namespace Invi5h\LaravelShopify;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Invi5h\LaravelShopify\Api\Graphql;
+use Invi5h\LaravelShopify\Api\Rest;
+use Invi5h\LaravelShopify\Api\Storefront;
+use Invi5h\LaravelShopify\Contracts\Api\GraphqlClientInterface;
+use Invi5h\LaravelShopify\Contracts\Api\RestClientInterface;
+use Invi5h\LaravelShopify\Contracts\Api\StorefrontClientInterface;
+use Invi5h\LaravelShopify\Contracts\ShopifyServiceInterface;
+use Invi5h\LaravelShopify\Service\ShopifyService;
 use Invi5h\LaravelShopify\Support\Socialite\ConfigRetriever;
 use SocialiteProviders\Manager\Contracts\Helpers\ConfigRetrieverInterface;
 use SocialiteProviders\Manager\SocialiteWasCalled;
@@ -42,9 +50,14 @@ class ServiceProvider extends LaravelServiceProvider
         Event::listen(SocialiteWasCalled::class, ShopifyExtendSocialite::class);
 
         $this->collectionMacros();
+
+        $this->app->singleton(ShopifyServiceInterface::class, ShopifyService::class);
+        $this->app->bind(RestClientInterface::class, Rest::class);
+        $this->app->bind(GraphqlClientInterface::class, Graphql::class);
+        $this->app->bind(StorefrontClientInterface::class, Storefront::class);
     }
 
-    public function collectionMacros() : void
+    private function collectionMacros() : void
     {
         Collection::macro('trim', function () {
             /** @var Collection $this */

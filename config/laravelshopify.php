@@ -17,8 +17,9 @@ return [
 
     // fixed subdomain is for custom apps
     'subdomain' => env('APP_SUBDOMAIN', ''),
-    'api_key' => env('API_KEY', ''),
-    'api_secret' => env('API_SECRET', ''),
+    'api_key' => env('APP_KEY', ''),
+    'api_secret' => env('APP_SECRET', ''),
+    'api_version' => env('APP_VERSION', now()->startOfQuarter()->format('Y-m')),
 
     // dev stores are always in test mode
     'test_mode' => (bool) env('TEST_MODE', false),

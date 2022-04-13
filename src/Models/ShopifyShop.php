@@ -16,6 +16,7 @@ use Invi5h\LaravelShopify\Database\Factories\ShopifyShopFactory;
  * @property int $id
  * @property string $url
  * @property string $access_token
+ * @property string $storefront_token
  * @property string $status
  * @property string $name
  * @property string $email

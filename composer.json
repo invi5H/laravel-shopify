@@ -54,7 +54,10 @@
         "laravel": {
             "providers": [
                 "Invi5h\\LaravelShopify\\ServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Shopify": "Invi5h\\LaravelShopify\\Facades\\Shopify"
+            }
         }
     },
     "scripts": {

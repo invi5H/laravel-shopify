@@ -14,6 +14,7 @@ return new class () extends Migration {
             $table->unsignedBigInteger('id')->primary();
             $table->string('url')->unique();
             $table->string('access_token')->nullable();
+            $table->string('storefront_token')->nullable();
             $table->string('status')->default('active');
             $table->string('name')->nullable();
             $table->string('email')->nullable();
