@@ -5,6 +5,9 @@ use Illuminate\Http\Response;
 use Invi5h\LaravelShopify\Tests\TestCase;
 use Pest\Expectation;
 
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->safeLoad();
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -16,7 +19,7 @@ use Pest\Expectation;
 |
 */
 
-uses(TestCase::class)->in('Unit');
+uses(TestCase::class)->in('Unit', 'Feature');
 
 /*
 |--------------------------------------------------------------------------

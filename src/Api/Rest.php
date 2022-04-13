@@ -15,13 +15,6 @@ class Rest extends AbstractClient implements RestClientInterface
         return new RestResponse($client->get("{$resource}.json", $params), $client);
     }
 
-    protected function newClient(array $options = []) : PendingRequest
-    {
-        $url = "https://{$this->domain}/admin/api/".config('laravelshopify.api_version');
-
-        return $this->makeHttpClient($options)->baseUrl($url)->withHeaders(['X-Shopify-Access-Token' => $this->accessToken]);
-    }
-
     public function post(string $resource, array $params = [], array $headers = []) : RestResponseInterface
     {
         $client = $this->newClient()->withHeaders($headers);
@@ -41,5 +34,12 @@ class Rest extends AbstractClient implements RestClientInterface
         $client = $this->newClient()->withHeaders($headers);
 
         return new RestResponse($client->delete("{$resource}.json", $params), $client);
+    }
+
+    protected function newClient(array $options = []) : PendingRequest
+    {
+        $url = "https://{$this->url}/admin/api/".config('laravelshopify.api_version');
+
+        return $this->makeHttpClient($options)->baseUrl($url)->withHeaders(['X-Shopify-Access-Token' => $this->accessToken]);
     }
 }

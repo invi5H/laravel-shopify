@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 abstract class AbstractClient
 {
-    public function __construct(protected string $domain, protected string $accessToken)
+    public function __construct(protected string $url, protected string $accessToken)
     {
     }
 

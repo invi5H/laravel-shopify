@@ -2,6 +2,7 @@
 
 namespace Invi5h\LaravelShopify\Support;
 
+use Invi5h\LaravelShopify\Contracts\ShopModelInterface;
 use Invi5h\LaravelShopify\Models\ShopifyShop;
 
 /**
@@ -11,16 +12,18 @@ use Invi5h\LaravelShopify\Models\ShopifyShop;
  */
 class ShopifyAppContext
 {
-    public function __construct(protected ShopifyShop $shop)
+    public function __construct(protected ShopModelInterface $shop)
     {
     }
 
     public function __get(string $name)
     {
+        /** @var ShopifyShop $shop */
+        $shop = $this->shop;
         return match ($name) {
-            'domain' => $this->shop->url,
-            'access_token' => $this->shop->access_token,
-            'storefront_token' => $this->shop->storefront_token,
+            'url' => $shop->url,
+            'access_token' => $shop->access_token,
+            'storefront_token' => $shop->storefront_token,
         };
     }
 }

@@ -67,6 +67,7 @@
 		<exclude name="Squiz.Commenting.VariableComment" />
 		<exclude name="Squiz.ControlStructures.ElseIfDeclaration.NotAllowed" />
 		<exclude name="Squiz.Files.FileExtension.ClassFound" />
+		<exclude name="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps" />
 		<exclude name="Squiz.Operators.ComparisonOperatorUsage" />
 		<exclude name="Squiz.PHP.DisallowBooleanStatement.Found" />
 		<exclude name="Squiz.PHP.DisallowInlineIf.Found" />

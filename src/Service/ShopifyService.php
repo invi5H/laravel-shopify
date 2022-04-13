@@ -2,6 +2,7 @@
 
 namespace Invi5h\LaravelShopify\Service;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Invi5h\LaravelShopify\Contracts\Api\GraphqlClientInterface;
 use Invi5h\LaravelShopify\Contracts\Api\ResponseInterface;
@@ -19,17 +20,17 @@ class ShopifyService implements ShopifyServiceInterface
 
     public function getRestClient() : RestClientInterface
     {
-        return app()->make(RestClientInterface::class, [$this->context->url, $this->context->access_token]);
+        return App::makeWith(RestClientInterface::class, ['url' => $this->context->url, 'accessToken' => $this->context->access_token]);
     }
 
     public function getGraphqlClient() : GraphqlClientInterface
     {
-        return app()->make(GraphqlClientInterface::class, [$this->context->url, $this->context->access_token]);
+        return App::makeWith(GraphqlClientInterface::class, ['url' => $this->context->url, 'accessToken' => $this->context->access_token]);
     }
 
     public function getStorefrontClient() : StorefrontClientInterface
     {
-        return app()->make(StorefrontClientInterface::class, [$this->context->url, $this->context->storefront_token]);
+        return App::makeWith(StorefrontClientInterface::class, ['url' => $this->context->url, 'accessToken' => $this->context->storefront_token]);
     }
 
     public function setContext(ShopifyAppContext $context) : static

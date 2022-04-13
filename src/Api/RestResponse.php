@@ -31,30 +31,12 @@ class RestResponse extends Response implements RestResponseInterface
 
     public function hasNextPage() : bool
     {
-        return (optional($this->nextPage)->get() instanceof static) || $this->getPaginationLinks()['next'];
-    }
-
-    protected function getPaginationLinks() : array
-    {
-        if (null !== $this->paginationLinks) {
-            return $this->paginationLinks;
-        }
-
-        $link = $this->response->header('Link');
-        $links = explode(',', $link);
-        $result = [];
-        foreach ($links as $link) {
-            $url = Str::between(Str::before($link, ';'), '<', '>');
-            $type = Str::of(Str::after($link, ';'))->replace('rel=', '')->trim()->trim('"\'')->__toString();
-            $result[$type] = $url;
-        }
-
-        return $this->paginationLinks = $result;
+        return (optional($this->nextPage)->get() instanceof static) || Arr::exists($this->getPaginationLinks(), 'next');
     }
 
     public function hasPreviousPage() : bool
     {
-        return (optional($this->previousPage)->get() instanceof static) || $this->getPaginationLinks()['previous'];
+        return (optional($this->previousPage)->get() instanceof static) || Arr::exists($this->getPaginationLinks(), 'previous');
     }
 
     public function getNextPage() : ?static
@@ -103,5 +85,29 @@ class RestResponse extends Response implements RestResponseInterface
         $this->previousPage = WeakReference::create($previousPage);
 
         return $this;
+    }
+
+    public function clearPageReferences() : void
+    {
+        $this->nextPage = null;
+        $this->previousPage = null;
+    }
+
+    protected function getPaginationLinks() : array
+    {
+        if (null !== $this->paginationLinks) {
+            return $this->paginationLinks;
+        }
+
+        $link = $this->response->header('Link');
+        $links = explode(',', $link);
+        $result = [];
+        foreach ($links as $link) {
+            $url = Str::between(Str::before($link, ';'), '<', '>');
+            $type = Str::of(Str::after($link, ';'))->replace('rel=', '')->trim()->trim('"\'')->__toString();
+            $result[$type] = $url;
+        }
+
+        return $this->paginationLinks = $result;
     }
 }

@@ -27,7 +27,9 @@ class ShopifyShopFactory extends Factory
     public function definition() : array
     {
         return [
-                'url' => Str::slug((string) $this->faker->words($this->faker->biasedNumberBetween(1, 3), true)),
+                'url' => Str::slug((string) $this->faker->words($this->faker->biasedNumberBetween(1, 3), true)).'.myshopify.com',
+                'access_token' => Str::random(),
+                'storefront_token' => Str::random(),
         ];
     }
 }

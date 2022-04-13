@@ -3,4 +3,5 @@
 /tests-coverage/
 .php-cs-fixer.cache
 /temp/
+.env
 _ide_helper.php

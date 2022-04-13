@@ -25,7 +25,7 @@ class Graphql extends AbstractClient implements GraphqlClientInterface
 
     protected function newClient(array $options = []) : PendingRequest
     {
-        $url = "https://{$this->domain}/admin/api/".config('laravelshopify.api_version');
+        $url = "https://{$this->url}/admin/api/".config('laravelshopify.api_version');
 
         return $this->makeHttpClient($options)->baseUrl($url)->withHeaders(['X-Shopify-Storefront-Access-Token' => $this->accessToken]);
     }
@@ -36,6 +36,7 @@ class Graphql extends AbstractClient implements GraphqlClientInterface
         $query = Str::of($query)->replaceMatches('/\s+/', ' ');
         $query = $query->replaceMatches('/\s{/', '{')->replaceMatches('/{\s/', '{');
         $query = $query->replaceMatches('/\s}/', '}')->replaceMatches('/}\s/', '}');
+
         return $query->trim()->toString();
     }
 }
