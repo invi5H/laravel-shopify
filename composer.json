@@ -66,10 +66,10 @@
     "scripts": {
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
         "analyze": "./vendor/bin/psalm",
+        "alter": "./vendor/bin/psalter --issues=all",
         "check": "./vendor/bin/php-cs-fixer fix --diff --dry-run -vvv",
         "sniff": "./vendor/bin/phpcs",
         "fix": [
-            "./vendor/bin/psalter --issues=all",
             "./vendor/bin/php-cs-fixer fix",
             "./vendor/bin/phpcbf"
         ],
