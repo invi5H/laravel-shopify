@@ -57,6 +57,7 @@
 	</rule>
 	<rule ref="Squiz">
 		<exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned" />
+		<exclude name="Squiz.Formatting.OperatorBracket" />
 		<exclude name="Squiz.Commenting.BlockComment" />
 		<exclude name="Squiz.Commenting.ClassComment" />
 		<exclude name="Squiz.Commenting.ClosingDeclarationComment.Missing" />
@@ -68,6 +69,7 @@
 		<exclude name="Squiz.ControlStructures.ElseIfDeclaration.NotAllowed" />
 		<exclude name="Squiz.Files.FileExtension.ClassFound" />
 		<exclude name="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps" />
+		<exclude name="Squiz.Objects.ObjectInstantiation.NotAssigned" />
 		<exclude name="Squiz.Operators.ComparisonOperatorUsage" />
 		<exclude name="Squiz.PHP.DisallowBooleanStatement.Found" />
 		<exclude name="Squiz.PHP.DisallowInlineIf.Found" />

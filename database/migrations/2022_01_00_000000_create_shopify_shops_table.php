@@ -21,7 +21,9 @@ return new class () extends Migration {
             $table->string('domain')->nullable();
             $table->boolean('dev')->default(false);
             $table->boolean('plus')->default(false);
-            $table->string('scope')->nullable();
+            // for small apps, the default of 255 should be enough, for big apps 511 will be enough, but 1023 should cover edge cases too
+            // asking for every public scope in shopify currently goes around ~700
+            $table->string('scope', 1023)->nullable();
             $table->timestamps();
         });
     }

@@ -51,7 +51,7 @@ class ServiceProvider extends LaravelServiceProvider
 
         $this->collectionMacros();
 
-        $this->app->singleton(ShopifyServiceInterface::class, ShopifyService::class);
+        $this->app->bind(ShopifyServiceInterface::class, ShopifyService::class);
         $this->app->bind(RestClientInterface::class, Rest::class);
         $this->app->bind(GraphqlClientInterface::class, Graphql::class);
         $this->app->bind(StorefrontClientInterface::class, Storefront::class);

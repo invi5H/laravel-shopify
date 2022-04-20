@@ -9,8 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Invi5h\LaravelShopify\Contracts\Api\RestResponseInterface;
 use Invi5h\LaravelShopify\Contracts\ShopModelInterface;
 use Invi5h\LaravelShopify\Database\Factories\ShopifyShopFactory;
+use Invi5h\LaravelShopify\Events\ShopifyInstallEvent;
+use Invi5h\LaravelShopify\Facades\Shopify;
+use Invi5h\LaravelShopify\Support\ShopifyAppContext;
+use Throwable;
 
 /**
  * @property int $id
@@ -26,6 +31,7 @@ use Invi5h\LaravelShopify\Database\Factories\ShopifyShopFactory;
  * @property array $scope
  * @property null|Carbon $created_at
  * @property null|Carbon $updated_at
+ *
  * @method static Builder|static newModelQuery()
  * @method static Builder|static newQuery()
  * @method static Builder|static query()
@@ -61,18 +67,28 @@ class ShopifyShop extends Model implements ShopModelInterface
 
     public function setup() : void
     {
-        // @todo implement
+        ShopifyInstallEvent::dispatch($this);
     }
 
     public function isAccessTokenValid() : bool
     {
-        // @todo implement
-        return true;
+        try {
+            return $this->getSelf()->successful();
+        } catch (Throwable) {
+            return false;
+        }
     }
 
     public function needsReauth() : bool
     {
-        // @todo implement
+        $scope = collect($this->scope);
+        $required = $this->requiredScopes();
+        foreach ($required as $value) {
+            if (!$scope->contains($value) && !$scope->contains(Str::replaceFirst('read_', 'write_', $value))) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -96,8 +112,7 @@ class ShopifyShop extends Model implements ShopModelInterface
 
     public function isDevShop() : bool
     {
-        // @todo implement
-        return true;
+        return $this->dev;
     }
 
     public function createBillingContract() : ?array
@@ -139,5 +154,10 @@ class ShopifyShop extends Model implements ShopModelInterface
     protected static function newFactory() : ShopifyShopFactory
     {
         return ShopifyShopFactory::new();
+    }
+
+    protected function getSelf() : RestResponseInterface
+    {
+        return Shopify::setContext(new ShopifyAppContext($this))->get('store');
     }
 }

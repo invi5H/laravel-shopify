@@ -39,7 +39,8 @@
         "friendsofphp/php-cs-fixer": "^3.7",
         "laravel/framework": "^9.6",
         "orchestra/testbench": "^7.2",
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "pestphp/pest-plugin-mock": "^1.0"
     },
     "support": {
         "issues": "https://github.com/invi5H/laravel-shopify/issues",
