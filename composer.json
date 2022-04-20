@@ -1,7 +1,7 @@
 {
     "name": "invi5h/laravel-shopify",
     "description": "A Laravel package for helping in Shopify App development",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "type": "library",
     "license": "MIT",
     "authors": [
