@@ -20,6 +20,7 @@ class ShopifyAppContext
     {
         /** @var ShopifyShop $shop */
         $shop = $this->shop;
+
         return match ($name) {
             'url' => $shop->url,
             'access_token' => $shop->access_token,

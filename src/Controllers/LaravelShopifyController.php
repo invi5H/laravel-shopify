@@ -140,6 +140,14 @@ class LaravelShopifyController extends Controller
     }
 
     /**
+     * @psalm-suppress UndefinedInterfaceMethod
+     */
+    public function getOauthDriver() : Provider
+    {
+        return Socialite::driver('shopify')->stateless();
+    }
+
+    /**
      * @psalm-suppress InvalidReturnStatement
      * @psalm-suppress InvalidReturnType
      */
@@ -167,14 +175,6 @@ class LaravelShopifyController extends Controller
         }
 
         return false;
-    }
-
-    /**
-     * @psalm-suppress UndefinedInterfaceMethod
-     */
-    public function getOauthDriver() : Provider
-    {
-        return Socialite::driver('shopify')->stateless();
     }
 
     /**

@@ -9,6 +9,7 @@ use SocialiteProviders\Manager\ServiceProvider as SocialiteShopifyServiceProvide
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ *
  * @internal
  */
 class TestCase extends \Orchestra\Testbench\TestCase

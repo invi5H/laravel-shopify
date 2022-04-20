@@ -9,6 +9,7 @@ $finder = PhpCsFixer\Finder::create()->in([
 ]);
 
 $config = new PhpCsFixer\Config();
+
 return $config->setRules([
         '@PHP80Migration:risky' => true,
         '@PHP81Migration' => true,
@@ -28,12 +29,11 @@ return $config->setRules([
         'native_function_invocation' => false,
         'phpdoc_align' => false,
         'function_declaration' => false,
-        'single_line_comment_style' => [
-                'comment_types' => ['hash'],
-        ],
-        'phpdoc_to_comment' => [
-                'ignored_tags' => ['var', 'psalm-suppress'],
-        ],
+        'single_line_comment_style' => ['comment_types' => ['hash']],
+        'phpdoc_to_comment' => ['ignored_tags' => ['var', 'psalm-suppress']],
         'php_unit_test_class_requires_covers' => false,
         'final_internal_class' => false,
+        'blank_line_before_statement' => ['statements' => ['goto', 'phpdoc', 'return']],
+        'no_extra_blank_lines' => ['tokens' => ['break', 'continue', 'curly_brace_block', 'default', 'extra', 'parenthesis_brace_block', 'return', 'square_brace_block', 'switch', 'throw', 'use']],
+        'single_trait_insert_per_statement' => false,
 ])->setRiskyAllowed(true)->setFinder($finder);

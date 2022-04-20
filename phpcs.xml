@@ -19,6 +19,7 @@
 	<rule ref="Generic">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
 		<exclude name="Generic.Arrays.ArrayIndent.KeyIncorrect" />
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed" />
 		<exclude name="Generic.Commenting.ClassComment.*" />
 		<exclude name="Generic.Commenting.DocComment" />
 		<exclude name="Generic.Commenting.Todo.TaskFound" />
@@ -54,6 +55,7 @@
 	<rule ref="PSR12">
 		<exclude name="PSR12.Functions.ReturnTypeDeclaration.SpaceBeforeColon" />
 		<exclude name="PSR12.Operators.OperatorSpacing" />
+		<exclude name="PSR12.Traits.UseDeclaration.MultipleImport" />
 	</rule>
 	<rule ref="Squiz">
 		<exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned" />

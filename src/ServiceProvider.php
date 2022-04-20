@@ -2,7 +2,10 @@
 
 namespace Invi5h\LaravelShopify;
 
+use Firebase\JWT\Key;
+use Illuminate\Auth\RequestGuard;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Invi5h\LaravelShopify\Api\Graphql;
@@ -13,6 +16,7 @@ use Invi5h\LaravelShopify\Contracts\Api\RestClientInterface;
 use Invi5h\LaravelShopify\Contracts\Api\StorefrontClientInterface;
 use Invi5h\LaravelShopify\Contracts\ShopifyServiceInterface;
 use Invi5h\LaravelShopify\Service\ShopifyService;
+use Invi5h\LaravelShopify\Support\Auth\ShopifyGuard;
 use Invi5h\LaravelShopify\Support\Socialite\ConfigRetriever;
 use SocialiteProviders\Manager\Contracts\Helpers\ConfigRetrieverInterface;
 use SocialiteProviders\Manager\SocialiteWasCalled;
@@ -34,6 +38,10 @@ class ServiceProvider extends LaravelServiceProvider
 
     /**
      * Bootstrap services.
+     *
+     * @psalm-suppress MissingClosureParamType
+     * @psalm-suppress UnusedClosureParam
+     * @psalm-suppress MixedArrayAccess
      */
     public function boot() : void
     {
@@ -55,6 +63,19 @@ class ServiceProvider extends LaravelServiceProvider
         $this->app->bind(RestClientInterface::class, Rest::class);
         $this->app->bind(GraphqlClientInterface::class, Graphql::class);
         $this->app->bind(StorefrontClientInterface::class, Storefront::class);
+
+        Auth::extend('shopify', function ($app, $name, array $config) : RequestGuard {
+            return tap($this->createShopifyGuard($config, $app['request']), function ($guard) use ($app) : void {
+                $app->refresh('request', $guard, 'setRequest');
+            });
+        });
+    }
+
+    protected function createShopifyGuard(array $config, mixed $request) : RequestGuard
+    {
+        $key = new Key(config('laravelshopify.api_secret'), 'HS256');
+
+        return new RequestGuard(new ShopifyGuard(config('laravelshopify.api_key'), $key, $config['leeway'] ?? null), $request);
     }
 
     private function collectionMacros() : void

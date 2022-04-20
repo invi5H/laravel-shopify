@@ -26,6 +26,7 @@ class ShopifyService implements ShopifyServiceInterface
     public function getRestClient() : RestClientInterface
     {
         $this->verifyShopifyStore();
+
         return App::makeWith(RestClientInterface::class, ['url' => $this->context->url, 'accessToken' => $this->context->access_token]);
     }
 
@@ -36,6 +37,7 @@ class ShopifyService implements ShopifyServiceInterface
     public function getGraphqlClient() : GraphqlClientInterface
     {
         $this->verifyShopifyStore();
+
         return App::makeWith(GraphqlClientInterface::class, ['url' => $this->context->url, 'accessToken' => $this->context->access_token]);
     }
 
@@ -46,6 +48,7 @@ class ShopifyService implements ShopifyServiceInterface
     public function getStorefrontClient() : StorefrontClientInterface
     {
         $this->verifyShopifyStore();
+
         return App::makeWith(StorefrontClientInterface::class, ['url' => $this->context->url, 'accessToken' => $this->context->storefront_token]);
     }
 

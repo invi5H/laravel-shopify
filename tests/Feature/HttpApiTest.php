@@ -27,7 +27,10 @@ it('resolves to correct http clients', function () : void {
 it('queries valid data', function () : void {
     $class = config('laravelshopify.shop_model');
 
-    /** @var ShopifyShop $model */
+    /**
+     * @var ShopifyShop $model
+     * @psalm-suppress UndefinedClass
+     */
     $model = new $class([
             'url' => $_ENV['STORE_URL'],
             'access_token' => $_ENV['STORE_ACCESSTOKEN'],
@@ -57,7 +60,10 @@ it('queries valid data', function () : void {
 it('works with crud', function () : void {
     $class = config('laravelshopify.shop_model');
 
-    /** @var ShopifyShop $model */
+    /**
+     * @var ShopifyShop $model
+     * @psalm-suppress UndefinedClass
+     */
     $model = new $class([
             'url' => $_ENV['STORE_URL'],
             'access_token' => $_ENV['STORE_ACCESSTOKEN'],

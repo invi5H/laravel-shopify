@@ -30,6 +30,7 @@
 		<PossiblyUndefinedMethod errorLevel="suppress" />
 		<UndefinedAttributeClass errorLevel="suppress" />
 		<UndefinedDocblockClass errorLevel="suppress" />
+		<UndefinedMethod errorLevel="suppress" />
 		<InvalidScope>
 			<errorLevel type="suppress">
 				<directory name="tests" />

@@ -51,6 +51,7 @@ it('is valid view', function () : void {
     $method = $class->getMethod('billingPageRedirectResponse');
     $method->setAccessible(true);
     $class = config('laravelshopify.shop_model');
+
     /** @psalm-suppress UndefinedClass */
     expect($method->invoke($controller, new $class()))->toBeResponse();
 });
@@ -59,6 +60,7 @@ it('is valid app url', function () : void {
     $class = config('laravelshopify.shop_model');
     $factory = $class::factory();
     expect($factory)->toBeInstanceOf(ShopifyShopFactory::class);
+
     /** @var ShopifyShop $model */
     $model = $factory->create();
 

@@ -22,7 +22,8 @@ class ShopifyShopFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<empty, empty>
+     * @return array<string, string>
+     * @psalm-return array{url: string, access_token: string, storefront_token: string}
      */
     public function definition() : array
     {
