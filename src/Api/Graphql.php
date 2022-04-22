@@ -27,7 +27,7 @@ class Graphql extends AbstractClient implements GraphqlClientInterface
     {
         $url = "https://{$this->url}/admin/api/".config('laravelshopify.api_version');
 
-        return $this->makeHttpClient($options)->baseUrl($url)->withHeaders(['X-Shopify-Storefront-Access-Token' => $this->accessToken]);
+        return $this->makeHttpClient($options)->baseUrl($url)->withHeaders(['X-Shopify-Access-Token' => $this->accessToken]);
     }
 
     protected function formatGraphqlQuery(string $query) : string

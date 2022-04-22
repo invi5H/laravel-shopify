@@ -18,12 +18,9 @@ class ShopifyGuard
 {
     protected ?CarbonInterval $leeway;
 
-    public function __construct(public string $apiKey, public Key $secretKey, DateInterval|string|null $leeway = '5 min')
+    public function __construct(public string $apiKey, public Key $secretKey, DateInterval|string|null $leeway = '5 minutes')
     {
-        $this->leeway = CarbonInterval::make($leeway ?? '5 min');
-        if (!$this->leeway) {
-            $this->leeway = CarbonInterval::make('5 min');
-        }
+        $this->leeway = CarbonInterval::make($leeway ?? '5 minutes') ?? CarbonInterval::make('5 minutes');
     }
 
     public function __invoke(Request $request) : ?Authenticatable

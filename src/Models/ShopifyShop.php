@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Invi5h\LaravelShopify\Contracts\Api\RestResponseInterface;
+use Invi5h\LaravelShopify\Contracts\Api\ResponseInterface;
 use Invi5h\LaravelShopify\Contracts\ShopModelInterface;
 use Invi5h\LaravelShopify\Database\Factories\ShopifyShopFactory;
 use Invi5h\LaravelShopify\Events\ShopifyInstallEvent;
@@ -31,7 +31,6 @@ use Throwable;
  * @property array $scope
  * @property null|Carbon $created_at
  * @property null|Carbon $updated_at
- *
  * @method static Builder|static newModelQuery()
  * @method static Builder|static newQuery()
  * @method static Builder|static query()
@@ -79,6 +78,20 @@ class ShopifyShop extends Model implements ShopModelInterface
         }
     }
 
+    /**
+     * @throws Throwable
+     */
+    public function reloadFromShopify() : void
+    {
+        $response = $this->getSelf();
+        throw_unless($this->getSelf()->successful(), 'Access token is invalid.');
+        $this->name = $response->json('data.shop.name');
+        $this->email = $response->json('data.shop.email');
+        $this->dev = (bool) $response->json('data.shop.plan.partnerDevelopment');
+        $this->plus = (bool) $response->json('data.shop.plan.shopifyPlus');
+        $this->save();
+    }
+
     public function needsReauth() : bool
     {
         $scope = collect($this->scope);
@@ -113,6 +126,11 @@ class ShopifyShop extends Model implements ShopModelInterface
     public function isDevShop() : bool
     {
         return $this->dev;
+    }
+
+    public function isPlusShop() : bool
+    {
+        return $this->plus;
     }
 
     public function createBillingContract() : ?array
@@ -156,8 +174,21 @@ class ShopifyShop extends Model implements ShopModelInterface
         return ShopifyShopFactory::new();
     }
 
-    protected function getSelf() : RestResponseInterface
+    protected function getSelf() : ResponseInterface
     {
-        return Shopify::setContext(new ShopifyAppContext($this))->get('store');
+        $query = <<<'QUERY'
+          query {
+            shop {
+              name
+              email
+              plan {
+                partnerDevelopment
+                shopifyPlus
+              }
+            }
+          }
+        QUERY;
+
+        return Shopify::setContext(new ShopifyAppContext($this))->graphql($query);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Invi5h\LaravelShopify\Contracts\Api\GraphqlClientInterface;
+use Invi5h\LaravelShopify\Contracts\Api\ResponseInterface;
 use Invi5h\LaravelShopify\Contracts\Api\RestClientInterface;
 use Invi5h\LaravelShopify\Contracts\Api\RestResponseInterface;
 use Invi5h\LaravelShopify\Contracts\Api\StorefrontClientInterface;
@@ -15,6 +17,8 @@ it('has facade resolving to correct class', function () : void {
 
 it('resolves to correct http clients', function () : void {
     $class = config('laravelshopify.shop_model');
+
+    expect(fn() => Shopify::getRestClient())->toThrow(BindingResolutionException::class);
 
     /** @var ShopifyShop $model */
     $model = $class::factory()->create();
@@ -70,20 +74,34 @@ it('works with crud', function () : void {
     ]);
     $shopify = Shopify::setContext(new ShopifyAppContext($model));
 
-    $response = $shopify->post('customers', [
-            'first_name' => 'Steve',
-            'last_name' => 'Lastname',
-            'email' => 'steve.lastname@example.com',
+    $response = $shopify->post('products', [
+            'product' => [
+                    'title' => 'Test Item',
+                    'vendor' => 'test',
+                    'product_type' => 'test',
+                    'body_html' => '<p>test body</p>',
+            ],
     ]);
     expect($response)->toBeInstanceOf(RestResponseInterface::class);
 
-    $customer = $response->json('customer.id');
-    expect($customer)->toBeNumeric();
+    $product = $response->json('product.id');
+    expect($product)->toBeNumeric();
 
-    $response = $shopify->put("customers/{$customer}", ['last_name' => 'LastName']);
+    $response = $shopify->put("products/{$product}", ['product' => ['body_html' => '<p>updated body</p>']]);
     expect($response)->toBeInstanceOf(RestResponseInterface::class);
-    expect($response->json('customer.last_name'))->toBe('LastName');
+    expect($response->json('product.body_html'))->toBe('<p>updated body</p>');
 
-    $response = $shopify->delete("customers/{$customer}");
+    $query = <<<'QUERY'
+      query($id: ID!) {
+        product(id: $id) {
+          title
+        }
+      }
+    QUERY;
+    $response = $shopify->graphql($query, ['id' => $response->json('product.admin_graphql_api_id')]);
+    expect($response)->toBeInstanceOf(ResponseInterface::class);
+    expect($response->json('data.product.title'))->toBe('Test Item');
+
+    $response = $shopify->delete("products/{$product}");
     expect($response)->toBeInstanceOf(RestResponseInterface::class);
-})->skip(message: 'Needs the write access scope');
+});

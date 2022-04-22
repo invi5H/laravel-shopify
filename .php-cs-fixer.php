@@ -26,6 +26,7 @@ return $config->setRules([
                 'space_before' => 'one',
         ],
         'array_indentation' => false,
+        'heredoc_indentation' => ['indentation' => 'same_as_start'],
         'native_function_invocation' => false,
         'phpdoc_align' => false,
         'function_declaration' => false,

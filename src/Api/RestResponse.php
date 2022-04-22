@@ -19,9 +19,9 @@ class RestResponse extends Response implements RestResponseInterface
 
     public function __construct(LaravelResponse $response, PendingRequest $request)
     {
-        parent::__construct($response);
-        $this->request = clone $request;
-        $this->request->baseUrl('');
+        $request = clone $request;
+        $request->baseUrl('');
+        parent::__construct($response, $request);
     }
 
     public function hasPagination() : bool

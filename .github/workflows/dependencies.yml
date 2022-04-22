@@ -1,0 +1,35 @@
+name: Dependabot auto-merge
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  validate:
+    name: Code Validations
+    uses: ./.github/workflows/code-validations.yml
+
+  context:
+    name: Context
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub context
+        run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+
+  automerge:
+    name: auto-merge
+    runs-on: ubuntu-latest
+    needs: validate
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Run action
+        uses: invi5H/dependabot-automerge@v1

@@ -2,12 +2,7 @@
 
 namespace Invi5h\LaravelShopify\Contracts\Api;
 
-use Illuminate\Http\Client\Response;
-
-/**
- * @mixin Response
- */
-interface RestResponseInterface
+interface RestResponseInterface extends ResponseInterface
 {
     public function hasPagination() : bool;
 

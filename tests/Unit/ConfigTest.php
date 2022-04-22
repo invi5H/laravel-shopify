@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Auth\RequestGuard;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth as Auth;
 use Invi5h\LaravelShopify\Contracts\ShopModelInterface;
 use Invi5h\LaravelShopify\Models\AppType;
 use Invi5h\LaravelShopify\Models\Billing\BillingType;
@@ -28,4 +30,14 @@ it('is valid billing type', function () : void {
     expect($type->isRecurring())->toBeFalse();
     expect($type->enabled())->toBeTrue();
     expect($type->disabled())->toBeFalse();
+});
+
+it('has valid auth guard', function () : void {
+    $this->app['config']->set('auth.guards.shopify', ['driver' => 'shopify']);
+    $guard = Auth::guard('shopify');
+    expect($guard)->toBeInstanceOf(RequestGuard::class);
+
+    $this->app['config']->set('auth.guards.shopify', ['driver' => 'shopify', 'leeway' => 'invalid']);
+    $guard = Auth::guard('shopify');
+    expect($guard)->toBeInstanceOf(RequestGuard::class);
 });
