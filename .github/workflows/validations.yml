@@ -1,0 +1,51 @@
+name: Validations
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  validations:
+    name: Validations and Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Validate composer files
+        run: composer validate
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: php-dev-${{ hashFiles('**/composer.*') }}
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install -o --prefer-dist --no-progress --no-suggest
+
+      - name: Run test suite
+        run: composer run-script test
+        env:
+          APP_KEY: ${{ secrets.APP_KEY }}
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          APP_URL: ${{ secrets.APP_URL }}
+          STORE_URL: ${{ secrets.STORE_URL }}
+          STORE_ACCESSTOKEN: ${{ secrets.STORE_ACCESSTOKEN }}
+
+      - name: Run style checks
+        continue-on-error: true
+        run: composer run-script check
+
+      - name: Run code sniffer
+        continue-on-error: true
+        run: composer run-script sniffs

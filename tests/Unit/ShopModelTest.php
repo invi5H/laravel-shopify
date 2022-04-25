@@ -46,8 +46,8 @@ it('is connected to shopify', function () : void {
      * @psalm-suppress UndefinedClass
      */
     $model = new $class([
-            'url' => $_ENV['STORE_URL'],
-            'access_token' => $_ENV['STORE_ACCESSTOKEN'],
+            'url' => env('STORE_URL'),
+            'access_token' => env('STORE_ACCESSTOKEN'),
     ]);
 
     expect(fn() => $model->reloadFromShopify())->not()->toThrow(RuntimeException::class);

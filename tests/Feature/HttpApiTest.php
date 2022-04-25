@@ -36,8 +36,8 @@ it('queries valid data', function () : void {
      * @psalm-suppress UndefinedClass
      */
     $model = new $class([
-            'url' => $_ENV['STORE_URL'],
-            'access_token' => $_ENV['STORE_ACCESSTOKEN'],
+            'url' => env('STORE_URL'),
+            'access_token' => env('STORE_ACCESSTOKEN'),
     ]);
     $shopify = Shopify::setContext(new ShopifyAppContext($model));
     $response = $shopify->get('customers', ['limit' => 1]);
@@ -69,8 +69,8 @@ it('works with crud', function () : void {
      * @psalm-suppress UndefinedClass
      */
     $model = new $class([
-            'url' => $_ENV['STORE_URL'],
-            'access_token' => $_ENV['STORE_ACCESSTOKEN'],
+            'url' => env('STORE_URL'),
+            'access_token' => env('STORE_ACCESSTOKEN'),
     ]);
     $shopify = Shopify::setContext(new ShopifyAppContext($model));
 

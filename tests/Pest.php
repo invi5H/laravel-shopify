@@ -8,6 +8,10 @@ use Pest\Expectation;
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->safeLoad();
 
+echo 'Environment Variable Keys:'.PHP_EOL;
+dump(array_keys($_ENV));
+dump(array_keys(getenv()));
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
