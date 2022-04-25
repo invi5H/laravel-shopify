@@ -17,7 +17,7 @@ return [
 
     // fixed subdomain is for custom apps
     'subdomain' => env('APP_SUBDOMAIN', ''),
-    'api_key' => env('APP_KEY', ''),
+    'api_key' => env('APP_ACCESS_KEY', ''),
     'api_secret' => env('APP_SECRET', ''),
     'api_version' => env('APP_VERSION', now()->startOfQuarter()->format('Y-m')),
 
