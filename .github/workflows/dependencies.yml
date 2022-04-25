@@ -14,7 +14,7 @@ permissions:
 jobs:
   validate:
     name: Code Validations
-    uses: ./.github/workflows/code-validations.yml
+    uses: ./.github/workflows/validations.yml
 
   context:
     name: Context
