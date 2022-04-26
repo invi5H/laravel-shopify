@@ -33,7 +33,7 @@ it('is valid oauth response', function () : void {
     $method->setAccessible(true);
 
     $response = $method->invoke($controller, $model->requiredScopes()->join(','));
-    expect($response)->toBeRedirect();
+    expect($response)->toBeResponse();
 });
 
 it('is valid view', function () : void {

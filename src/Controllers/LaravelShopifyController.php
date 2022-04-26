@@ -2,6 +2,7 @@
 
 namespace Invi5h\LaravelShopify\Controllers;
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -17,6 +18,7 @@ use Invi5h\LaravelShopify\Contracts\ShopModelInterface;
 use Invi5h\LaravelShopify\Models\ShopifyShop;
 use Laravel\Socialite\Facades\Socialite;
 use SocialiteProviders\Shopify\Provider;
+use stdClass;
 
 class LaravelShopifyController extends Controller
 {
@@ -101,25 +103,40 @@ class LaravelShopifyController extends Controller
         $shop = (string) $request->input('shop');
         if ($shop && $this->verifyShopifyHmac($request->getQueryString())) {
             Log::debug('Shopify callback for Shop- '.$shop);
-            $user = $this->getOauthDriver()->user();
+            try {
+                $user = $this->getOauthDriver()->user();
 
-            $data = [
-                    'id' => $user->id,
-                    'url' => $shop,
-                    'access_token' => $user->token,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'domain' => $user['domain'],
-                    'scope' => $user->accessTokenResponseBody['scope'],
-                    'dev' => Str::contains($user['plan_name'], 'dev'),
-                    'plus' => Str::contains($user['plan_name'], 'plus'),
-                    'created_at' => Carbon::parse($user['created_at']),
-                    'updated_at' => Carbon::parse($user['updated_at']),
-            ];
+                $scope = $user->accessTokenResponseBody['scope'];
+                $scope = is_string($scope) ? explode(',', $scope) : $scope;
+                $scope = collect($scope)->trim()->toArray();
+                $data = [
+                        'id' => $user->id,
+                        'url' => $shop,
+                        'access_token' => $user->token,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'domain' => $user['domain'],
+                        'scope' => $scope,
+                        'dev' => Str::contains($user['plan_name'], 'dev'),
+                        'plus' => Str::contains($user['plan_name'], 'plus'),
+                        'created_at' => Carbon::parse($user['created_at']),
+                        'updated_at' => Carbon::parse($user['updated_at']),
+                ];
 
-            /** @var ShopModelInterface $shopObject */
-            $shopObject = $this->shopModel::updateOrCreate(['url' => $shop], $data);
-            $shopObject->setup();
+                /** @var ShopModelInterface $shopObject */
+                $shopObject = $this->shopModel::updateOrCreate(['url' => $shop], $data);
+                $shopObject->setup();
+            } catch (ClientException $e) {
+                $response = $e->getResponse();
+                $authCodeError = 'The authorization code was not found or was already used';
+                /** @var stdClass $json */
+                $json = json_decode((string) $response->getBody());
+                if (400 === $response->getStatusCode() && isset($json->error_description) && $authCodeError === $json->error_description) {
+                    $shopObject = $this->shopModel::for($shop);
+                } else {
+                    throw $e;
+                }
+            }
 
             if ($shopObject->needsBilling()) {
                 Log::debug('Making billing contract- '.$shop);
@@ -132,6 +149,8 @@ class LaravelShopifyController extends Controller
 
                 return $this->billingPageRedirectResponse($shopObject);
             }
+
+            Log::debug('Redirecting to- '.$this->getAppUrl($shopObject));
 
             return redirect()->away($this->getAppUrl($shopObject));
         }
@@ -179,8 +198,11 @@ class LaravelShopifyController extends Controller
 
     /**
      * @param  array<int,string>|Collection|string  $scopes
+     *
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress InvalidReturnType
      */
-    protected function getOauthResponse(string|array|Collection $scopes) : RedirectResponse
+    protected function getOauthResponse(string|array|Collection $scopes) : Response
     {
         if (is_string($scopes)) {
             $scopes = explode(',', $scopes);
@@ -192,7 +214,8 @@ class LaravelShopifyController extends Controller
          */
         $scopes = collect($scopes)->values()->trim()->all();
 
-        return $this->getOauthDriver()->scopes($scopes)->redirect();
+        $redirect = $this->getOauthDriver()->scopes($scopes)->redirect();
+        return response("<script>window.top.location.href='{$redirect->getTargetUrl()}'</script>");
     }
 
     protected function redirectToAppView() : RedirectResponse

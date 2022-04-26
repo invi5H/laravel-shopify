@@ -13,7 +13,7 @@ return [
     'type' => AppType::tryFrom(env('APP_TYPE', 'public')) ?: AppType::PUBLIC,
 
     'name' => env('APP_NAME', 'App'),
-    'url' => env('APP_URL', Str::slug(env('APP_NAME', 'App'))),
+    'url' => env('APP_SHOPIFY_URL', Str::slug(env('APP_NAME', 'App'))),
 
     // fixed subdomain is for custom apps
     'subdomain' => env('APP_SUBDOMAIN', ''),
