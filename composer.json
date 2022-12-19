@@ -35,7 +35,7 @@
     },
     "require-dev": {
         "pestphp/pest": "^1.21",
-        "vimeo/psalm": "^4.22",
+        "vimeo/psalm": "^4.22 || ^5.0",
         "squizlabs/php_codesniffer": "^3.6",
         "friendsofphp/php-cs-fixer": "^3.8",
         "laravel/framework": "^9.9",
